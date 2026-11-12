@@ -1,7 +1,7 @@
 import inspect
 from meterbook.store import Store
 from meterbook.values import fields, reject, MeterError
-from meterbook.contracts import registry, rates, simulation, calendar, budgets
+from meterbook.contracts import registry, rates, simulation, calendar, budgets, experiments
 from meterbook.events import receiver, reconcile, disputes, recovery
 from meterbook.settlement import pricing, invoices, payments, credits, campaigns, costcenters, preflight
 from meterbook.audit import checks, explanations, anomalies
@@ -19,6 +19,7 @@ class Meterbook:
         self.campaigns = campaigns.Campaigns(self.store)
         self.costcenters = costcenters.CostCenters(self.store)
         self.budgets = budgets.Budgets(self.store)
+        self.experiments = experiments.QuoteExperiments(self.store)
         self.receipts = receipts.Receipts(self.store)
         self.transfers = transfer.Transfers(self.store)
         self.imports = mapping.Imports(self.store)
@@ -43,6 +44,7 @@ class Meterbook:
             'calendar': self.calendar, 'rate_desk': self.rates,
             'credit': self.credits, 'campaign': self.campaigns,
             'cost': self.costcenters, 'budget': self.budgets,
+            'experiment': self.experiments,
             'receipt': self.receipts, 'transfer': self.transfers,
             'import': self.imports, 'statement': self.statements, 'review': self.reviews,
         }.items():
